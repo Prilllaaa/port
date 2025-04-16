@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Portfolio</title>
+    <title>Priscilla K - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <style>
         /* Base Styles */
@@ -19,7 +19,7 @@
             overflow-x: hidden;
         }
         
-        /* Mobile-First Header */
+        /* Header */
         .white-header {
             position: fixed;
             top: 0;
@@ -49,17 +49,39 @@
             white-space: nowrap;
         }
         
-        /* Hero Section Adjustments */
+        /* Hero Section */
         .hero-section {
             position: relative;
             height: 100vh;
             margin-top: 60px;
         }
         
-        /* Mobile Slideshow Layout */
-        .slideshow-container {
+        /* Mobile Slideshow (Single Image) */
+        .mobile-slideshow {
+            display: none;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .mobile-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
+        
+        .mobile-slide.active {
+            opacity: 1;
+        }
+        
+        /* Desktop Slideshow (3-Panel) */
+        .desktop-slideshow {
             display: flex;
-            flex-direction: column;
+            width: 100%;
             height: 100%;
         }
         
@@ -70,37 +92,35 @@
             position: relative;
             overflow: hidden;
             opacity: 0;
-            transform: translateY(20px);
+            transform: translateX(-100%) scale(1.1);
         }
         
         .slide-divider {
-            height: 2px;
+            width: 2px;
             background: rgba(255,255,255,0.2);
         }
         
-        /* Vertical Animation for Mobile */
-        @keyframes slideUp {
-            0% { 
-                transform: translateY(20px);
-                opacity: 0;
-            }
-            100% { 
-                transform: translateY(0);
-                opacity: 1;
-            }
+        /* Dark overlay */
+        .mobile-slide::after,
+        .slide-panel::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
         
-        .slide-panel.active {
-            animation: slideUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        }
-        
-        /* Welcome Message Mobile Styling */
+        /* Welcome Message */
         .welcome-overlay {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             width: 90%;
+            max-width: 800px;
             text-align: center;
             padding: 20px;
             z-index: 2;
@@ -119,23 +139,61 @@
         }
         
         .cta-button {
+            display: inline-block;
             padding: 10px 25px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            border-radius: 50px;
             font-size: 0.9rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
         
-        /* Dark overlay */
-        .slide-panel::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4);
-            z-index: 1;
+        .cta-button:hover {
+            background: white;
+            color: black;
         }
         
-        /* Desktop Overrides */
+        /* Desktop Animations */
+        @keyframes parallaxWipe {
+            0% { 
+                transform: translateX(-100%) scale(1.1);
+                opacity: 0;
+            }
+            100% { 
+                transform: translateX(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .slide-panel.active {
+            animation: parallaxWipe 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        
+        #panel1.active { animation-delay: 0s; }
+        #panel2.active { animation-delay: 0.15s; }
+        #panel3.active { animation-delay: 0.3s; }
+        
+        /* Responsive Breakpoints */
+        @media (max-width: 767px) {
+            .desktop-slideshow {
+                display: none;
+            }
+            
+            .mobile-slideshow {
+                display: block;
+            }
+            
+            .welcome-message h1 {
+                font-size: 2rem;
+            }
+            
+            .welcome-message p {
+                font-size: 1rem;
+            }
+        }
+        
         @media (min-width: 768px) {
             .white-header {
                 padding: 20px;
@@ -149,38 +207,6 @@
             .white-header nav a {
                 font-size: 18px;
             }
-            
-            .slideshow-container {
-                flex-direction: row;
-            }
-            
-            .slide-panel {
-                transform: translateX(-100%) scale(1.1);
-            }
-            
-            .slide-divider {
-                width: 2px;
-                height: auto;
-            }
-            
-            @keyframes parallaxWipe {
-                0% { 
-                    transform: translateX(-100%) scale(1.1);
-                    opacity: 0;
-                }
-                100% { 
-                    transform: translateX(0) scale(1);
-                    opacity: 1;
-                }
-            }
-            
-            .slide-panel.active {
-                animation: parallaxWipe 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-            }
-            
-            #panel1.active { animation-delay: 0s; }
-            #panel2.active { animation-delay: 0.15s; }
-            #panel3.active { animation-delay: 0.3s; }
             
             .welcome-message h1 {
                 font-size: 4rem;
@@ -207,7 +233,20 @@
 
     <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <div class="slideshow-container">
+        <!-- Mobile Slideshow (Single Image) -->
+        <div class="mobile-slideshow">
+            <div class="mobile-slide" id="m-slide1"></div>
+            <div class="mobile-slide" id="m-slide2"></div>
+            <div class="mobile-slide" id="m-slide3"></div>
+            <div class="mobile-slide" id="m-slide4"></div>
+            <div class="mobile-slide" id="m-slide5"></div>
+            <div class="mobile-slide" id="m-slide6"></div>
+            <div class="mobile-slide" id="m-slide7"></div>
+            <div class="mobile-slide" id="m-slide8"></div>
+        </div>
+        
+        <!-- Desktop Slideshow (3-Panel) -->
+        <div class="desktop-slideshow">
             <div class="slide-panel" id="panel1"></div>
             <div class="slide-divider"></div>
             <div class="slide-panel" id="panel2"></div>
@@ -226,12 +265,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const panels = [
-                document.getElementById('panel1'),
-                document.getElementById('panel2'),
-                document.getElementById('panel3')
-            ];
-            
             const imagePool = [
                 'image1.jpg',
                 'image2.jpg',
@@ -242,36 +275,79 @@
                 'image7.jpg',
                 'image8.jpg'
             ];
-        
-            function getRandomImage(exclude = []) {
-                const available = imagePool.filter(img => !exclude.includes(img));
-                return available[Math.floor(Math.random() * available.length)];
-            }
-        
-            function updateSlideshow() {
-                const usedImages = [];
-                
-                panels.forEach(panel => {
-                    panel.classList.remove('active');
-                    void panel.offsetWidth;
-                    
-                    const img = getRandomImage(usedImages);
-                    panel.style.backgroundImage = `url(${img})`;
-                    usedImages.push(img);
-                    
-                    panel.classList.add('active');
-                });
-            }
-        
-            updateSlideshow();
-            setInterval(updateSlideshow, 5000);
             
-            // Touch event prevention for smoother scrolling
-            document.body.addEventListener('touchmove', function(e) {
-                if(e.target.classList.contains('slideshow-container')) {
-                    e.preventDefault();
+            // Mobile Slideshow Logic (Single Image)
+            if (window.innerWidth <= 767) {
+                const mobileSlides = [
+                    document.getElementById('m-slide1'),
+                    document.getElementById('m-slide2'),
+                    document.getElementById('m-slide3'),
+                    document.getElementById('m-slide4'),
+                    document.getElementById('m-slide5'),
+                    document.getElementById('m-slide6'),
+                    document.getElementById('m-slide7'),
+                    document.getElementById('m-slide8')
+                ];
+                
+                // Assign images
+                mobileSlides.forEach((slide, index) => {
+                    slide.style.backgroundImage = `url(${imagePool[index]})`;
+                });
+                
+                let currentMobileSlide = 0;
+                
+                function nextMobileSlide() {
+                    mobileSlides[currentMobileSlide].classList.remove('active');
+                    currentMobileSlide = (currentMobileSlide + 1) % mobileSlides.length;
+                    mobileSlides[currentMobileSlide].classList.add('active');
                 }
-            }, { passive: false });
+                
+                // Initialize
+                mobileSlides[0].classList.add('active');
+                setInterval(nextMobileSlide, 4000);
+            } 
+            // Desktop Slideshow Logic (3-Panel)
+            else {
+                const panels = [
+                    document.getElementById('panel1'),
+                    document.getElementById('panel2'),
+                    document.getElementById('panel3')
+                ];
+                
+                function getRandomImage(exclude = []) {
+                    const available = imagePool.filter(img => !exclude.includes(img));
+                    return available[Math.floor(Math.random() * available.length)];
+                }
+                
+                function updateSlideshow() {
+                    const usedImages = [];
+                    
+                    panels.forEach(panel => {
+                        panel.classList.remove('active');
+                        void panel.offsetWidth;
+                        
+                        const img = getRandomImage(usedImages);
+                        panel.style.backgroundImage = `url(${img})`;
+                        usedImages.push(img);
+                        
+                        panel.classList.add('active');
+                    });
+                }
+                
+                updateSlideshow();
+                setInterval(updateSlideshow, 5000);
+            }
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth <= 767) {
+                document.querySelector('.desktop-slideshow').style.display = 'none';
+                document.querySelector('.mobile-slideshow').style.display = 'block';
+            } else {
+                document.querySelector('.desktop-slideshow').style.display = 'flex';
+                document.querySelector('.mobile-slideshow').style.display = 'none';
+            }
         });
     </script>
 </body>
