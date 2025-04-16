@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Priscilla K - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         /* Base Styles */
         * {
@@ -133,9 +134,8 @@
             line-height: 1.2;
         }
         
-        /* Changed span color to teal (#2ec4b6) */
         .welcome-message h1 span {
-            color:#3a86ff;
+            color: #3a86ff;
             text-shadow: 0 2px 4px rgba(0,0,0,0.3);
         }
         
@@ -181,6 +181,108 @@
         #panel2.active { animation-delay: 0.15s; }
         #panel3.active { animation-delay: 0.3s; }
         
+        /* About Section */
+        .about-section {
+            background: #121212;
+            padding: 80px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+        
+        .about-photo, .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .photo-frame {
+            border: 3px solid #3a86ff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(58, 134, 255, 0.2);
+            transform: rotate(-3deg);
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transform: rotate(3deg) scale(1.05);
+            transition: transform 0.5s ease;
+        }
+        
+        .photo-frame:hover img {
+            transform: rotate(3deg) scale(1.1);
+        }
+        
+        .about-text h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .about-text h2 span {
+            color: #3a86ff;
+        }
+        
+        .about-text h3 {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+        
+        .about-content p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .skill-category h4 {
+            color: #3a86ff;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .skill-category h4 i {
+            margin-right: 10px;
+        }
+        
+        .skill-category ul {
+            list-style: none;
+        }
+        
+        .skill-category li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .skill-category li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #3a86ff;
+        }
+        
         /* Responsive Breakpoints */
         @media (max-width: 767px) {
             .desktop-slideshow {
@@ -197,6 +299,19 @@
             
             .welcome-message p {
                 font-size: 1rem;
+            }
+            
+            .about-text h2 {
+                font-size: 2.2rem;
+            }
+            
+            .about-text h3 {
+                font-size: 1.2rem;
+            }
+            
+            .photo-frame {
+                max-width: 300px;
+                margin: 0 auto 40px;
             }
         }
         
@@ -265,6 +380,53 @@
                 <h1>Hello, I'm <span>Priscilla K</span></h1>
                 <p>Front-End Developer and CyberSec Student</p>
                 <a href="#projects" class="cta-button">View My Work</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="about-container">
+            <div class="about-photo">
+                <div class="photo-frame">
+                    <img src="your-professional-photo.jpg" alt="Priscilla K - Cyber Security Professional">
+                </div>
+            </div>
+            
+            <div class="about-text">
+                <h2>About <span>Me</span></h2>
+                <h3>Front-End Developer & Security Enthusiast</h3>
+                
+                <div class="about-content">
+                    <p>
+                        Passionate cybersecurity student and front-end developer with expertise in creating secure web applications. 
+                        Currently pursuing my degree while developing practical solutions that bridge design and security.
+                    </p>
+                    
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h4><i class="fas fa-lock"></i> Security Skills</h4>
+                            <ul>
+                                <li>Web Application Security</li>
+                                <li>OWASP Principles</li>
+                                <li>Secure Coding</li>
+                                <li>Network Fundamentals</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h4><i class="fas fa-code"></i> Development</h4>
+                            <ul>
+                                <li>HTML/CSS/JavaScript</li>
+                                <li>React/Vue.js</li>
+                                <li>Responsive Design</li>
+                                <li>API Integration</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <a href="#contact" class="cta-button">Get In Touch</a>
+                </div>
             </div>
         </div>
     </section>
