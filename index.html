@@ -19,13 +19,13 @@
             overflow-x: hidden;
         }
         
-        /* White Header */
+        /* Mobile-First Header */
         .white-header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            padding: 20px;
+            padding: 15px 10px;
             z-index: 1000;
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -33,36 +33,33 @@
         
         .white-header nav ul {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
             list-style: none;
-            gap: 30px;
+            gap: 5px;
         }
         
         .white-header nav a {
             color: black;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 14px;
             font-weight: 500;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            padding: 5px;
+            white-space: nowrap;
         }
         
-        .white-header nav a:hover {
-            opacity: 0.7;
-        }
-        
-        /* Combined Slideshow */
+        /* Hero Section Adjustments */
         .hero-section {
             position: relative;
             height: 100vh;
-            margin-top: 70px;
-            display: flex;
+            margin-top: 60px;
         }
         
-        /* 3-Panel Slideshow */
+        /* Mobile Slideshow Layout */
         .slideshow-container {
             display: flex;
-            width: 100%;
+            flex-direction: column;
             height: 100%;
         }
         
@@ -73,87 +70,60 @@
             position: relative;
             overflow: hidden;
             opacity: 0;
-            transform: translateX(-100%) scale(1.1);
+            transform: translateY(20px);
         }
         
         .slide-divider {
-            width: 2px;
+            height: 2px;
             background: rgba(255,255,255,0.2);
         }
         
-        /* Parallax Wipe Animation */
-        @keyframes parallaxWipe {
+        /* Vertical Animation for Mobile */
+        @keyframes slideUp {
             0% { 
-                transform: translateX(-100%) scale(1.1);
+                transform: translateY(20px);
                 opacity: 0;
             }
             100% { 
-                transform: translateX(0) scale(1);
+                transform: translateY(0);
                 opacity: 1;
             }
         }
         
         .slide-panel.active {
-            animation: parallaxWipe 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            animation: slideUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
         
-        #panel1.active { animation-delay: 0s; }
-        #panel2.active { animation-delay: 0.15s; }
-        #panel3.active { animation-delay: 0.3s; }
-        
-        /* Welcome Message Overlay */
+        /* Welcome Message Mobile Styling */
         .welcome-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
             text-align: center;
+            padding: 20px;
             z-index: 2;
-        }
-        
-        .welcome-message {
-            max-width: 800px;
-            padding: 0 20px;
         }
         
         .welcome-message h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            margin-bottom: 15px;
-        }
-        
-        .welcome-message h1 span {
-            color: #fca311;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            line-height: 1.2;
         }
         
         .welcome-message p {
-            font-size: 1.5rem;
-            margin-bottom: 30px;
-            font-weight: 300;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
         }
         
         .cta-button {
-            display: inline-block;
-            padding: 12px 30px;
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-            border-radius: 50px;
-            font-size: 1rem;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            padding: 10px 25px;
+            font-size: 0.9rem;
         }
         
-        .cta-button:hover {
-            background: white;
-            color: black;
-        }
-        
-        /* Dark overlay for better contrast */
+        /* Dark overlay */
         .slide-panel::after {
             content: '';
             position: absolute;
@@ -161,13 +131,69 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             z-index: 1;
+        }
+        
+        /* Desktop Overrides */
+        @media (min-width: 768px) {
+            .white-header {
+                padding: 20px;
+            }
+            
+            .white-header nav ul {
+                justify-content: center;
+                gap: 30px;
+            }
+            
+            .white-header nav a {
+                font-size: 18px;
+            }
+            
+            .slideshow-container {
+                flex-direction: row;
+            }
+            
+            .slide-panel {
+                transform: translateX(-100%) scale(1.1);
+            }
+            
+            .slide-divider {
+                width: 2px;
+                height: auto;
+            }
+            
+            @keyframes parallaxWipe {
+                0% { 
+                    transform: translateX(-100%) scale(1.1);
+                    opacity: 0;
+                }
+                100% { 
+                    transform: translateX(0) scale(1);
+                    opacity: 1;
+                }
+            }
+            
+            .slide-panel.active {
+                animation: parallaxWipe 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+            
+            #panel1.active { animation-delay: 0s; }
+            #panel2.active { animation-delay: 0.15s; }
+            #panel3.active { animation-delay: 0.3s; }
+            
+            .welcome-message h1 {
+                font-size: 4rem;
+            }
+            
+            .welcome-message p {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- White Header -->
+    <!-- Header -->
     <header class="white-header">
         <nav>
             <ul>
@@ -179,9 +205,8 @@
         </nav>
     </header>
 
-    <!-- Hero Section with Combined Slideshow -->
+    <!-- Hero Section -->
     <section class="hero-section" id="home">
-        <!-- 3-Panel Slideshow -->
         <div class="slideshow-container">
             <div class="slide-panel" id="panel1"></div>
             <div class="slide-divider"></div>
@@ -190,11 +215,10 @@
             <div class="slide-panel" id="panel3"></div>
         </div>
         
-        <!-- Welcome Message Overlay -->
         <div class="welcome-overlay">
             <div class="welcome-message">
-                <h1>Hello, I'm <span>Priscilla</span></h1>
-                <p>Cybersecurity Student</p>
+                <h1>Hello, I'm <span>Priscill</span></h1>
+                <p>Cyber Security Student</p>
                 <a href="#projects" class="cta-button">View My Work</a>
             </div>
         </div>
@@ -241,6 +265,13 @@
         
             updateSlideshow();
             setInterval(updateSlideshow, 5000);
+            
+            // Touch event prevention for smoother scrolling
+            document.body.addEventListener('touchmove', function(e) {
+                if(e.target.classList.contains('slideshow-container')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
         });
     </script>
 </body>
