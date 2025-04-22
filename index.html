@@ -1113,17 +1113,19 @@
             this.reset();
         });
 
-        fetch("https://your-project-name.vercel.app/api/contact", {
+       fetch("https://portfolio-backend-seven-zeta.vercel.app/", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
-    name: "Someone",
-    email: "someone@example.com",
-    message: "Hello from your website!",
+    name: form.name.value,
+    email: form.email.value,
+    message: form.message.value
   }),
 })
-  .then((res) => res.text())
-  .then((msg) => alert(msg));
+.then(res => res.text())
+.then(alert)
+.catch(() => alert("Something went wrong!"));
+
 
         const form = document.getElementById("contactForm");
 
