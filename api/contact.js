@@ -1,37 +1,44 @@
-const mongoose = require("mongoose");
-const Message = require("../models/Message");
-const dbConnect = require("../utils/db");
-const nodemailer = require("nodemailer");
+const { MongoClient } = require("mongodb");
+const { Resend } = require("resend");
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const uri = process.env.MONGO_URI;
+const client = new MongoClient(uri);
 
 module.exports = async (req, res) => {
-  if (req.method !== "POST") return res.status(405).send("Only POST allowed");
-
-  await dbConnect();
+  if (req.method !== "POST") {
+    return res.status(405).send("Only POST requests allowed");
+  }
 
   const { name, email, message } = req.body;
 
-  const newMessage = new Message({ name, email, message });
-  await newMessage.save();
-
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-
-  const mailOptions = {
-    from: email,
-    to: process.env.EMAIL,
-    subject: `New message from ${name}`,
-    text: message,
-  };
+  if (!name || !email || !message) {
+    return res.status(400).send("All fields are required");
+  }
 
   try {
-    await transporter.sendMail(mailOptions);
+    // Store message in MongoDB
+    await client.connect();
+    const db = client.db("messages");
+    const collection = db.collection("contacts");
+    await collection.insertOne({ name, email, message, date: new Date() });
+
+    // Send email using Resend
+    await resend.emails.send({
+      from: "Luxe and Love <onboarding@resend.dev>",
+      to: process.env.EMAIL,
+      subject: `New message from ${name}`,
+      html: `<p><strong>Name:</strong> ${name}</p>
+             <p><strong>Email:</strong> ${email}</p>
+             <p><strong>Message:</strong><br>${message}</p>`,
+    });
+
     res.status(200).send("Message sent and saved!");
   } catch (error) {
-    res.status(500).send("Error sending message");
+    console.error("Error:", error);
+    res.status(500).send("Something went wrong");
+  } finally {
+    await client.close();
   }
 };
