@@ -1112,6 +1112,19 @@
             alert('Thank you for your message! I will get back to you soon.');
             this.reset();
         });
+
+        fetch("https://your-project-name.vercel.app/api/contact", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: "Someone",
+    email: "someone@example.com",
+    message: "Hello from your website!",
+  }),
+})
+  .then((res) => res.text())
+  .then((msg) => alert(msg));
+
     </script>
 </body>
 </html>
