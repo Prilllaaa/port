@@ -993,146 +993,145 @@
         </div>
     </section>
 
-    <script>
-        // Header Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.white-header');
-            header.classList.toggle('scrolled', window.scrollY > 50);
-        });
+  <script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.white-header');
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-        // Slideshow Logic
-        document.addEventListener('DOMContentLoaded', function() {
-            const imagePool = [
-                'image1.jpg',
-                'image2.jpg',
-                'image3.jpg',
-                'image4.jpg',
-                'image5.jpg',
-                'image6.jpg',
-                'image7.jpg',
-                'image8.jpg'
+    // Slideshow Logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const imagePool = [
+            'image1.jpg',
+            'image2.jpg',
+            'image3.jpg',
+            'image4.jpg',
+            'image5.jpg',
+            'image6.jpg',
+            'image7.jpg',
+            'image8.jpg'
+        ];
+        
+        // Mobile Slideshow
+        if (window.innerWidth <= 767) {
+            const mobileSlides = [
+                document.getElementById('m-slide1'),
+                document.getElementById('m-slide2'),
+                document.getElementById('m-slide3'),
+                document.getElementById('m-slide4'),
+                document.getElementById('m-slide5'),
+                document.getElementById('m-slide6'),
+                document.getElementById('m-slide7'),
+                document.getElementById('m-slide8')
             ];
             
-            // Mobile Slideshow
-            if (window.innerWidth <= 767) {
-                const mobileSlides = [
-                    document.getElementById('m-slide1'),
-                    document.getElementById('m-slide2'),
-                    document.getElementById('m-slide3'),
-                    document.getElementById('m-slide4'),
-                    document.getElementById('m-slide5'),
-                    document.getElementById('m-slide6'),
-                    document.getElementById('m-slide7'),
-                    document.getElementById('m-slide8')
-                ];
+            mobileSlides.forEach((slide, index) => {
+                slide.style.backgroundImage = `url(${imagePool[index]})`;
+            });
+            
+            let currentMobileSlide = 0;
+            
+            function nextMobileSlide() {
+                mobileSlides[currentMobileSlide].classList.remove('active');
+                currentMobileSlide = (currentMobileSlide + 1) % mobileSlides.length;
+                mobileSlides[currentMobileSlide].classList.add('active');
+            }
+            
+            mobileSlides[0].classList.add('active');
+            setInterval(nextMobileSlide, 4000);
+        } 
+        // Desktop Slideshow
+        else {
+            const panels = [
+                document.getElementById('panel1'),
+                document.getElementById('panel2'),
+                document.getElementById('panel3')
+            ];
+            
+            function getRandomImage(exclude = []) {
+                const available = imagePool.filter(img => !exclude.includes(img));
+                return available[Math.floor(Math.random() * available.length)];
+            }
+            
+            function updateSlideshow() {
+                const usedImages = [];
                 
-                mobileSlides.forEach((slide, index) => {
-                    slide.style.backgroundImage = `url(${imagePool[index]})`;
-                });
-                
-                let currentMobileSlide = 0;
-                
-                function nextMobileSlide() {
-                    mobileSlides[currentMobileSlide].classList.remove('active');
-                    currentMobileSlide = (currentMobileSlide + 1) % mobileSlides.length;
-                    mobileSlides[currentMobileSlide].classList.add('active');
-                }
-                
-                mobileSlides[0].classList.add('active');
-                setInterval(nextMobileSlide, 4000);
-            } 
-            // Desktop Slideshow
-            else {
-                const panels = [
-                    document.getElementById('panel1'),
-                    document.getElementById('panel2'),
-                    document.getElementById('panel3')
-                ];
-                
-                function getRandomImage(exclude = []) {
-                    const available = imagePool.filter(img => !exclude.includes(img));
-                    return available[Math.floor(Math.random() * available.length)];
-                }
-                
-                function updateSlideshow() {
-                    const usedImages = [];
+                panels.forEach(panel => {
+                    panel.classList.remove('active');
+                    void panel.offsetWidth;
                     
-                    panels.forEach(panel => {
-                        panel.classList.remove('active');
-                        void panel.offsetWidth;
-                        
-                        const img = getRandomImage(usedImages);
-                        panel.style.backgroundImage = `url(${img})`;
-                        usedImages.push(img);
-                        
-                        panel.classList.add('active');
-                    });
-                }
-                
-                updateSlideshow();
-                setInterval(updateSlideshow, 5000);
-            }
-        });
-        
-        // Responsive Slideshow Toggle
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 767) {
-                document.querySelector('.desktop-slideshow').style.display = 'none';
-                document.querySelector('.mobile-slideshow').style.display = 'block';
-            } else {
-                document.querySelector('.desktop-slideshow').style.display = 'flex';
-                document.querySelector('.mobile-slideshow').style.display = 'none';
-            }
-        });
-
-        // Smooth Scrolling for Navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+                    const img = getRandomImage(usedImages);
+                    panel.style.backgroundImage = `url(${img})`;
+                    usedImages.push(img);
+                    
+                    panel.classList.add('active');
                 });
+            }
+            
+            updateSlideshow();
+            setInterval(updateSlideshow, 5000);
+        }
+    });
+
+    // Responsive Slideshow Toggle
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 767) {
+            document.querySelector('.desktop-slideshow').style.display = 'none';
+            document.querySelector('.mobile-slideshow').style.display = 'block';
+        } else {
+            document.querySelector('.desktop-slideshow').style.display = 'flex';
+            document.querySelector('.mobile-slideshow').style.display = 'none';
+        }
+    });
+
+    // Smooth Scrolling for Navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
+    });
 
-        // Contact Form Handling
-       
-  const form = document.getElementById("contact-form");
-  const responseBox = document.getElementById("response-message");
+    // Contact Form Handling
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value; // optional
+        const message = document.getElementById('message').value;
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+        // Send data to your Vercel backend
+        fetch("https://backend-eight-snowy-77.vercel.app/contact", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name,
+                email: email,
+                message: message
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Message sent!");
+            } else {
+                alert(data.error || "Failed to send message.");
+            }
+            document.getElementById('contactForm').reset();
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            alert("Something went wrong. Please try again later.");
+        });
+    });
+</script>
 
-    const formData = new FormData(form);
-    const data = {
-      name: formData.get("name"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-    };
-
-    try {
-      const response = await fetch("https://backend-eight-snowy-77.vercel.app/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        responseBox.textContent = "Message sent successfully!";
-        form.reset();
-      } else {
-        responseBox.textContent = result.error || "Something went wrong.";
-      }
-    } catch (error) {
-      console.error(error);
-      responseBox.textContent = "Failed to send message.";
-    }
-  });
-
-
-});
-    </script>
 </body>
 </html>
