@@ -1106,31 +1106,26 @@
         const message = document.getElementById('message').value;
 
         // Send data to your Vercel backend
-        fetch("https://backend-eight-snowy-77.vercel.app/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                message: message
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            if (data.success) {
-                alert("Message sent!");
-            } else {
-                alert(data.error || "Failed to send message.");
-            }
-            document.getElementById('contactForm').reset();
-        })
-        .catch(error => {
-            console.error("Error:", error);
-            alert("Something went wrong. Please try again later.");
-        });
-    });
+       fetch("/api/contact", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ name, email, message })
+})
+.then(res => res.json())
+.then(data => {
+  if (data.success) {
+    alert("Message sent!");
+  } else {
+    alert("Failed to send message.");
+  }
+})
+.catch(err => {
+  alert("Error sending message.");
+  console.error(err);
+});
+
 </script>
 
 </body>
