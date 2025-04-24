@@ -992,7 +992,7 @@
             </div>
         </div>
     </section>
-
+    
     <script>
         // Header Scroll Effect
         window.addEventListener('scroll', () => {
@@ -1095,23 +1095,52 @@
             });
         });
 
-        // Contact Form Handling
+        // Updated Contact Form Handling with Backend Integration
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             // Get form values
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const message = document.getElementById('message').value;
-            
-            // Here you would typically send the data to a server
-            // For now, we'll just log it and show an alert
-            console.log({name, email, subject, message});
-            
-            alert('Thank you for your message! I will get back to you soon.');
-            this.reset();
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+
+            // Show loading state
+            const submitBtn = document.querySelector('.submit-btn');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            submitBtn.disabled = true;
+
+            // Submit to your backend
+            fetch('https://backend-navy-kappa.vercel.app/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                alert('Thank you for your message! I will get back to you soon.');
+                document.getElementById('contactForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('There was a problem sending your message. Please try again later.');
+            })
+            .finally(() => {
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+                submitBtn.disabled = false;
+            });
         });
     </script>
+</body>
+</html>
 </body>
 </html>
