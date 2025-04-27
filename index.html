@@ -993,152 +993,154 @@
         </div>
     </section>
     
-    <script>
-        // Header Scroll Effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('.white-header');
-            header.classList.toggle('scrolled', window.scrollY > 50);
-        });
+   <script>
+    // Header Scroll Effect
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.white-header');
+        header.classList.toggle('scrolled', window.scrollY > 50);
+    });
 
-        // Slideshow Logic
-        document.addEventListener('DOMContentLoaded', function() {
-            const imagePool = [
-                'image1.jpg',
-                'image2.jpg',
-                'image3.jpg',
-                'image4.jpg',
-                'image5.jpg',
-                'image6.jpg',
-                'image7.jpg',
-                'image8.jpg'
+    // Slideshow Logic
+    document.addEventListener('DOMContentLoaded', function() {
+        const imagePool = [
+            'image1.jpg', 'image2.jpg', 'image3.jpg', 'image4.jpg',
+            'image5.jpg', 'image6.jpg', 'image7.jpg', 'image8.jpg'
+        ];
+
+        if (window.innerWidth <= 767) {
+            const mobileSlides = [
+                document.getElementById('m-slide1'),
+                document.getElementById('m-slide2'),
+                document.getElementById('m-slide3'),
+                document.getElementById('m-slide4'),
+                document.getElementById('m-slide5'),
+                document.getElementById('m-slide6'),
+                document.getElementById('m-slide7'),
+                document.getElementById('m-slide8')
             ];
-            
-            // Mobile Slideshow
-            if (window.innerWidth <= 767) {
-                const mobileSlides = [
-                    document.getElementById('m-slide1'),
-                    document.getElementById('m-slide2'),
-                    document.getElementById('m-slide3'),
-                    document.getElementById('m-slide4'),
-                    document.getElementById('m-slide5'),
-                    document.getElementById('m-slide6'),
-                    document.getElementById('m-slide7'),
-                    document.getElementById('m-slide8')
-                ];
-                
-                mobileSlides.forEach((slide, index) => {
-                    slide.style.backgroundImage = `url(${imagePool[index]})`;
-                });
-                
-                let currentMobileSlide = 0;
-                
-                function nextMobileSlide() {
-                    mobileSlides[currentMobileSlide].classList.remove('active');
-                    currentMobileSlide = (currentMobileSlide + 1) % mobileSlides.length;
-                    mobileSlides[currentMobileSlide].classList.add('active');
-                }
-                
-                mobileSlides[0].classList.add('active');
-                setInterval(nextMobileSlide, 4000);
-            } 
-            // Desktop Slideshow
-            else {
-                const panels = [
-                    document.getElementById('panel1'),
-                    document.getElementById('panel2'),
-                    document.getElementById('panel3')
-                ];
-                
-                function getRandomImage(exclude = []) {
-                    const available = imagePool.filter(img => !exclude.includes(img));
-                    return available[Math.floor(Math.random() * available.length)];
-                }
-                
-                function updateSlideshow() {
-                    const usedImages = [];
-                    
-                    panels.forEach(panel => {
-                        panel.classList.remove('active');
-                        void panel.offsetWidth;
-                        
-                        const img = getRandomImage(usedImages);
-                        panel.style.backgroundImage = `url(${img})`;
-                        usedImages.push(img);
-                        
-                        panel.classList.add('active');
-                    });
-                }
-                
-                updateSlideshow();
-                setInterval(updateSlideshow, 5000);
-            }
-        });
-        
-        // Responsive Slideshow Toggle
-        window.addEventListener('resize', function() {
-            if (window.innerWidth <= 767) {
-                document.querySelector('.desktop-slideshow').style.display = 'none';
-                document.querySelector('.mobile-slideshow').style.display = 'block';
-            } else {
-                document.querySelector('.desktop-slideshow').style.display = 'flex';
-                document.querySelector('.mobile-slideshow').style.display = 'none';
-            }
-        });
 
-        // Smooth Scrolling for Navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+            mobileSlides.forEach((slide, index) => {
+                slide.style.backgroundImage = `url(${imagePool[index]})`;
             });
-        });
 
-        // Updated Contact Form Handling with Backend Integration
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            let currentMobileSlide = 0;
+
+            function nextMobileSlide() {
+                mobileSlides[currentMobileSlide].classList.remove('active');
+                currentMobileSlide = (currentMobileSlide + 1) % mobileSlides.length;
+                mobileSlides[currentMobileSlide].classList.add('active');
+            }
+
+            mobileSlides[0].classList.add('active');
+            setInterval(nextMobileSlide, 4000);
+
+        } else {
+            const panels = [
+                document.getElementById('panel1'),
+                document.getElementById('panel2'),
+                document.getElementById('panel3')
+            ];
+
+            function getRandomImage(exclude = []) {
+                const available = imagePool.filter(img => !exclude.includes(img));
+                return available[Math.floor(Math.random() * available.length)];
+            }
+
+            function updateSlideshow() {
+                const usedImages = [];
+
+                panels.forEach(panel => {
+                    panel.classList.remove('active');
+                    void panel.offsetWidth;
+
+                    const img = getRandomImage(usedImages);
+                    panel.style.backgroundImage = `url(${img})`;
+                    usedImages.push(img);
+
+                    panel.classList.add('active');
+                });
+            }
+
+            updateSlideshow();
+            setInterval(updateSlideshow, 5000);
+        }
+    });
+
+    // Responsive Slideshow Toggle
+    window.addEventListener('resize', function() {
+        if (window.innerWidth <= 767) {
+            document.querySelector('.desktop-slideshow').style.display = 'none';
+            document.querySelector('.mobile-slideshow').style.display = 'block';
+        } else {
+            document.querySelector('.desktop-slideshow').style.display = 'flex';
+            document.querySelector('.mobile-slideshow').style.display = 'none';
+        }
+    });
+
+    // Smooth Scrolling for Navigation
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            
-            // Get form values
-            const formData = {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                subject: document.getElementById('subject').value,
-                message: document.getElementById('message').value
-            };
-
-            // Show loading state
-            const submitBtn = document.querySelector('.submit-btn');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            submitBtn.disabled = true;
-
-            // Submit to your backend
-            fetch('https://backend-navy-kappa.vercel.app/api/contact', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                alert('Thank you for your message! I will get back to you soon.');
-                document.getElementById('contactForm').reset();
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('There was a problem sending your message. Please try again later.');
-            })
-            .finally(() => {
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-                submitBtn.disabled = false;
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
         });
-    </script>
+    });
+
+    // Updated Contact Form Handling with Backend Integration (NO ALERT)
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            subject: document.getElementById('subject').value,
+            message: document.getElementById('message').value
+        };
+
+        // Show loading state
+        const submitBtn = document.querySelector('.submit-btn');
+        const statusText = document.getElementById('formStatus');
+        
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+        submitBtn.disabled = true;
+
+        // Submit to backend
+        fetch('https://backend-navy-kappa.vercel.app/api/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            statusText.innerText = 'Your message has been sent successfully!';
+            statusText.style.color = 'green';
+            document.getElementById('contactForm').reset();
+            
+            // Optional: clear the message after 5 seconds
+            setTimeout(() => {
+                statusText.innerText = '';
+            }, 5000);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            statusText.innerText = 'There was a problem sending your message. Please try again later.';
+            statusText.style.color = 'red';
+        })
+        .finally(() => {
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            submitBtn.disabled = false;
+        });
+    });
+</script>
+
 </body>
 </html>
