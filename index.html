@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priscilla Ocansey | Interactive Portfolio</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;600&display=swap">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Interactive Starfield -->
+    <canvas id="star-canvas"></canvas>
+    
+    <!-- Main Content Container -->
+    <div class="container">
+        <!-- Animated Header -->
+        <header class="cyber-header">
+            <h1 class="glitch" data-text="PRISCILLA OCANSEY">PRISCILLA OCANSEY</h1>
+            <div class="cyber-subtitle">
+                <span class="typing-text"></span>
+                <span class="blinking-cursor">_</span>
+            </div>
+        </header>
+        
+        <!-- Interactive Navigation -->
+        <nav class="cyber-nav">
+            <button class="nav-btn active" data-section="about">
+                <span class="btn-light"></span>
+                ABOUT
+            </button>
+            <button class="nav-btn" data-section="skills">
+                <span class="btn-light"></span>
+                SKILLS
+            </button>
+            <button class="nav-btn" data-section="projects">
+                <span class="btn-light"></span>
+                PROJECTS
+            </button>
+            <button class="nav-btn" data-section="contact">
+                <span class="btn-light"></span>
+                CONTACT
+            </button>
+        </nav>
+        
+        <!-- Content Sections -->
+        <main class="content-wrapper">
+            <section id="about" class="content-section active">
+                <div class="holographic-card">
+                    <div class="holo-content">
+                        <p>Cybersecurity specialist with passion for digital forensics and threat intelligence.</p>
+                        <p>Currently working as SOC Analyst while pursuing advanced certifications.</p>
+                        <div class="interactive-badge" id="badge">
+                            <span>HOVER ME</span>
+                            <div class="badge-layers"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="skills" class="content-section">
+                <div class="skill-grid">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+            
+            <section id="projects" class="content-section">
+                <div class="project-carousel">
+                    <!-- Filled by JavaScript -->
+                </div>
+            </section>
+            
+            <section id="contact" class="content-section">
+                <div class="cyber-terminal">
+                    <div class="terminal-header">
+                        <div class="terminal-buttons">
+                            <span class="terminal-btn red"></span>
+                            <span class="terminal-btn yellow"></span>
+                            <span class="terminal-btn green"></span>
+                        </div>
+                        <div class="terminal-title">contact_sequence.exe</div>
+                    </div>
+                    <div class="terminal-body">
+                        <div class="terminal-line">> Initializing secure connection...</div>
+                    </div>
+                    <form class="terminal-form">
+                        <span>> </span>
+                        <input type="text" class="terminal-input" placeholder="Type message...">
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Audio Elements (hidden) -->
+    <audio id="hover-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-sci-fi-click-screen-1090.mp3"></audio>
+    <audio id="click-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-plastic-interface-click-1107.mp3"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
